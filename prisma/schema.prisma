@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model MapType {
+    prefix         String   @id
+    type           String
+    entryCreatedAt DateTime @default(now())
+    entryUpdatedAt DateTime @updatedAt
+    dateAdded      DateTime
+    maps           Map[]
+}
+
+model Map {
+    mapName          String             @id
+    entryCreatedAt   DateTime           @default(now())
+    entryUpdatedAt   DateTime           @updatedAt
+    mapType          MapType            @relation(fields: [mapTypePrefix], references: [prefix])
+    mapTypePrefix    String
+    developers       Developer[]
+    MapsOnDevelopers MapsOnDevelopers[]
+    setting          String
+}
+
+model Developer {
+    id               String             @id @default(uuid())
+    entryCreatedAt   DateTime           @default(now())
+    entryUpdatedAt   DateTime           @updatedAt
+    name             String
+    link             String
+    maps             Map[]
+    MapsOnDevelopers MapsOnDevelopers[]
+}
+
+model MapsOnDevelopers {
+    id             String    @id @default(uuid())
+    entryCreatedAt DateTime  @default(now())
+    entryUpdatedAt DateTime  @updatedAt
+    developer      Developer @relation(fields: [developerId], references: [id])
+    developerId    String
+    map            Map       @relation(fields: [mapName], references: [mapName])
+    mapName        String
+    dateAdded      DateTime  @default(now())
+}
