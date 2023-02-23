@@ -34,7 +34,7 @@ model Map {
 
     developers Developer[]
 
-    map_images MapImage[]
+    // map_images MapImage[]
 
     map_type_prefix String
     mapType         MapType @relation(fields: [map_type_prefix], references: [prefix])
@@ -43,18 +43,18 @@ model Map {
     entry_updated_at DateTime @updatedAt
 }
 
-model MapImage {
-    id String @id @default(uuid())
+// model MapImage {
+//     id String @id @default(uuid())
 
-    description String @db.VarChar(255)
-    url         String @db.VarChar(256)
+//     description String @db.VarChar(255)
+//     url         String @db.VarChar(256)
 
-    map_name String
-    map      Map    @relation(fields: [map_name], references: [map_name])
+//     map_name String
+//     map      Map    @relation(fields: [map_name], references: [map_name])
 
-    entry_created_at DateTime @default(now())
-    entry_updated_at DateTime @updatedAt
-}
+//     entry_created_at DateTime @default(now())
+//     entry_updated_at DateTime @updatedAt
+// }
 
 model Developer {
     id String @id @default(uuid())
