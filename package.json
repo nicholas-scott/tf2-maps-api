@@ -5,7 +5,9 @@
 	"main": "index.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon --watch ./**/*.ts --exec ts-node-dev ./src/index.ts"
+		"dev": "nodemon --watch ./**/*.ts --exec ts-node-dev ./src/index.ts",
+		"dbpush": "npx prisma db push",
+		"dbstudio": "npx prisma studio"
 	},
 	"author": "",
 	"license": "ISC",
