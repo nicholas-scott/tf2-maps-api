@@ -4,13 +4,13 @@ type Query {
 }
 
 type Map {
-    file_name: ID!
+    fileName: ID!
 
     dateAdded: String!
     description: String!
     isOfficial: Boolean!
     isPyroland: Boolean!
-    map_name: String!
+    mapName: String!
 
     developers: [MapMaker!]!
     mapType: MapType!
