@@ -14,7 +14,7 @@ model MapType {
     prefix String @id @db.VarChar(16)
 
     date_added  DateTime
-    is_official Boolean
+    is_official Boolean  @default(true)
     type        String   @db.VarChar(64)
 
     maps Map[]
@@ -28,7 +28,7 @@ model Map {
 
     dateAdded      DateTime
     description    String   @db.Text
-    is_official    Boolean
+    is_official    Boolean  @default(true)
     is_pyro_vision Boolean
     setting        String   @db.VarChar(255)
 
@@ -57,7 +57,7 @@ model Map {
 // }
 
 model Developer {
-    id String @id @default(uuid())
+    id String @id @db.VarChar(64)
 
     name String @db.VarChar(64)
     link String @db.VarChar(256)
