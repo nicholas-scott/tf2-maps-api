@@ -34,27 +34,26 @@ model Map {
 
     developers Developer[]
 
-    // map_images MapImage[]
+    map_thumbnail_id String @unique
+    map_thumbnail    Image  @relation(fields: [map_thumbnail_id], references: [id])
 
     map_type_prefix String
-    mapType         MapType @relation(fields: [map_type_prefix], references: [prefix])
+    map_type        MapType @relation(fields: [map_type_prefix], references: [prefix])
 
     entry_created_at DateTime @default(now())
     entry_updated_at DateTime @updatedAt
 }
 
-// model MapImage {
-//     id String @id @default(uuid())
+model Image {
+    id String @id @default(uuid())
 
-//     description String @db.VarChar(255)
-//     url         String @db.VarChar(256)
+    description String @db.VarChar(255)
+    url         String @db.VarChar(256)
 
-//     map_name String
-//     map      Map    @relation(fields: [map_name], references: [map_name])
-
-//     entry_created_at DateTime @default(now())
-//     entry_updated_at DateTime @updatedAt
-// }
+    entry_created_at DateTime @default(now())
+    entry_updated_at DateTime @updatedAt
+    map              Map?
+}
 
 model Developer {
     id String @id @db.VarChar(64)
