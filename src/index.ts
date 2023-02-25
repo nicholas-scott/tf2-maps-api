@@ -27,6 +27,7 @@ async function contextFunction({ req, res }: any): Promise<Context> {
 
 async function startServer() {
 	const { url } = await startStandaloneServer(server, {
+		context: contextFunction,
 		listen: { port: 4000 },
 	})
 
