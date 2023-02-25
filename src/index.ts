@@ -3,14 +3,7 @@ import { startStandaloneServer } from "@apollo/server/standalone"
 import { PrismaClient, Prisma } from "@prisma/client"
 import resolvers from "./resolvers/resolvers"
 import typeDefs from "./schema"
-
-export interface Context {
-	prisma: PrismaClient<
-		Prisma.PrismaClientOptions,
-		never,
-		Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
-	>
-}
+import { Context } from "./types"
 
 const server = new ApolloServer({
 	typeDefs,
