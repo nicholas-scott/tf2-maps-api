@@ -2,8 +2,8 @@ import { Context, MapFilter, MapPayload } from "../types"
 
 const Query = {
 	getMap: async (
-		{ fileName, mapType }: MapFilter,
 		_: any,
+		{ fileName, mapType }: MapFilter,
 		{ prisma }: Context
 	): Promise<MapPayload> => {
 		if (fileName && mapType) {
