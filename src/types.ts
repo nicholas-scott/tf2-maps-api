@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient, Map } from "@prisma/client"
 
+// Context for Apollo Server
 export interface Context {
 	prisma: PrismaClient<
 		Prisma.PrismaClientOptions,
@@ -8,13 +9,13 @@ export interface Context {
 	>
 }
 
-// Input
+// Inputs for GraphQL resolvers
 export interface MapFilter {
 	fileName?: string
 	mapType?: string
 }
 
-// Payloads
+// Payloads for GraphQL resolvers
 export interface Payload {
 	userErrors: { message: string }[]
 }
