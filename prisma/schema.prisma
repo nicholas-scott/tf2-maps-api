@@ -24,7 +24,7 @@ model MapType {
 }
 
 model Map {
-    map_name String @id @db.VarChar(64)
+    file_name String @id @db.VarChar(64)
 
     dateAdded      DateTime
     description    String   @db.Text
