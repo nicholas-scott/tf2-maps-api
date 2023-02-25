@@ -3,7 +3,7 @@ type Query {
     getMap(input: MapFilter!): MapPayload!
 }
 
-type Map {
+type GameMap {
     fileName: ID!
 
     dateAdded: String!
@@ -23,7 +23,7 @@ type MapType{
     isOfficial: Boolean!
     typeName: String!
 
-    maps: [Map!]!
+    maps: [GameMap!]!
 }
 
 type MapMaker{
@@ -32,12 +32,12 @@ type MapMaker{
     link: String!
     name: String!
 
-    maps: [Map!]!
+    maps: [GameMap!]!
 }
 
 type MapPayload{
     userErrors: [UserError!]!
-    maps: [Map!]!
+    maps: [GameMap!]!
 }
 
 type UserError{
