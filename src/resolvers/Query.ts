@@ -20,7 +20,7 @@ const Query = {
 
 		if (fileName) {
 			const map = await prisma.map.findUnique({
-				where: { file_name: fileName },
+				where: { fileName },
 			})
 			const maps = map ? [map] : []
 			return {
@@ -32,7 +32,7 @@ const Query = {
 		return {
 			userErrors: [],
 			maps: await prisma.map.findMany({
-				where: { map_type_prefix: mapType },
+				where: { mapTypePrefix: mapType },
 			}),
 		}
 	},
