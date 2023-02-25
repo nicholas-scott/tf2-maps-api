@@ -1,6 +1,6 @@
 const typeDefs = `
 type Query {
-    hello: String
+    getMap(input: MapFilter!): MapPayload!
 }
 
 type Map {
@@ -33,6 +33,20 @@ type MapMaker{
     name: String!
 
     maps: [Map!]!
+}
+
+type MapPayload{
+    userErrors: [UserError!]!
+    maps: [Map!]!
+}
+
+type UserError{
+    message: String!
+}
+
+input MapFilter{
+    fileName: String!
+    mapType: String!
 }
 `
 
