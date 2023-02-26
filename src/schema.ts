@@ -1,6 +1,6 @@
 const typeDefs = `
 type Query {
-    getMap(input: MapFilter!): MapPayload!
+    getMaps(input: MapFilter!): MapPayload!
 }
 
 type GameMap {

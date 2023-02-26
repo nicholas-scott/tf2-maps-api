@@ -1,7 +1,7 @@
 import { Context, MapFilter, MapPayload } from "../types"
 
 const Query = {
-	getMap: async (
+	getMaps: async (
 		_: any,
 		{ fileName, mapType }: MapFilter,
 		{ prisma }: Context
