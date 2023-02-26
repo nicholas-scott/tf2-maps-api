@@ -13,9 +13,9 @@ datasource db {
 model MapType {
     prefix String @id @db.VarChar(16)
 
-    dateAdded  DateTime
+    dateAdded  DateTime @db.Date
     isOfficial Boolean  @default(true)
-    type       String   @db.VarChar(64)
+    name       String   @db.VarChar(64)
 
     maps Map[]
 
@@ -26,11 +26,11 @@ model MapType {
 model Map {
     fileName String @id @db.VarChar(64)
 
-    dateAdded    DateTime
+    dateAdded    DateTime @db.Date
     description  String   @db.Text
     isOfficial   Boolean  @default(true)
     isPyroVision Boolean
-    setting      String   @db.VarChar(255)
+    mapName      String   @db.VarChar(255)
 
     developers Developer[]
 
