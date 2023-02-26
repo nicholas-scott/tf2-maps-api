@@ -11,8 +11,10 @@ export interface Context {
 
 // Inputs for GraphQL resolvers
 export interface MapFilter {
-	fileName?: string
-	mapType?: string
+	filter: {
+		fileName?: string
+		mapType?: string
+	}
 }
 
 // Payloads for GraphQL resolvers

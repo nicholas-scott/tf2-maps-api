@@ -3,9 +3,11 @@ import { Context, MapFilter, MapPayload } from "../types"
 const Query = {
 	getMaps: async (
 		_: any,
-		{ fileName, mapType }: MapFilter,
+		{ filter }: MapFilter,
 		{ prisma }: Context
 	): Promise<MapPayload> => {
+		const { fileName, mapType } = filter
+
 		if (fileName && mapType) {
 			return {
 				userErrors: [

@@ -3,9 +3,10 @@ import { Context } from "../types"
 
 const GameMap = {
 	mapType: ({ mapTypePrefix }: Map, _: any, { prisma }: Context) => {
-		const map = prisma.mapType.findUnique({
+		const mapType = prisma.mapType.findUnique({
 			where: { prefix: mapTypePrefix },
 		})
+		return mapType
 	},
 }
 

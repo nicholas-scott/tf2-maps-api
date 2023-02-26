@@ -1,6 +1,6 @@
 const typeDefs = `
 type Query {
-    getMaps(input: MapFilter!): MapPayload!
+    getMaps(filter: MapFilter!): MapPayload!
 }
 
 type GameMap {
@@ -21,7 +21,7 @@ type MapType{
     
     dateAdded: String!
     isOfficial: Boolean!
-    typeName: String!
+    name: String!
 
     maps: [GameMap!]!
 }
@@ -45,8 +45,8 @@ type UserError{
 }
 
 input MapFilter{
-    fileName: String!
-    mapType: String!
+    fileName: String
+    mapType: String
 }
 `
 
