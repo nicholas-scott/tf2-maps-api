@@ -1,6 +1,7 @@
 const typeDefs = `
 type Query {
-    getMaps(filter: MapFilter!): MapPayload!
+    getMap(fileName: ID!): GameMap
+    getMaps(filter: MapFilter!): [GameMap!]!
     getMapTypes: [MapType!]!
 }
 
@@ -36,18 +37,14 @@ type MapMaker{
     maps: [GameMap!]!
 }
 
-type MapPayload{
-    userErrors: [UserError!]!
-    maps: [GameMap!]!
-}
-
 type UserError{
     message: String!
 }
 
 input MapFilter{
-    fileName: String
-    mapType: String
+    isOfficial: Boolean
+    isPyroVision: Boolean
+    mapTypePrefix: String
 }
 `
 

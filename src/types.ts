@@ -12,16 +12,13 @@ export interface Context {
 // Inputs for GraphQL resolvers
 export interface MapFilter {
 	filter: {
-		fileName?: string
-		mapType?: string
+		isOfficial?: boolean
+		isPyroVision?: boolean
+		mapTypePrefix?: string
 	}
 }
 
 // Payloads for GraphQL resolvers
 export interface Payload {
 	userErrors: { message: string }[]
-}
-
-export interface MapPayload extends Payload {
-	maps: Map[]
 }
