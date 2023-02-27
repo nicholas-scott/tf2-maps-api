@@ -26,11 +26,12 @@ model MapType {
 model Map {
     fileName String @id @db.VarChar(64)
 
-    dateAdded    DateTime @db.Date
-    description  String   @db.Text
-    isOfficial   Boolean  @default(true)
-    isPyroVision Boolean
-    mapName      String   @db.VarChar(255)
+    dateAdded      DateTime @db.Date
+    description    String   @db.Text
+    isOfficial     Boolean  @default(true)
+    isPyroVision   Boolean
+    mapEnvironment String   @db.VarChar(64)
+    mapName        String   @db.VarChar(255)
 
     developers Developer[]
 
