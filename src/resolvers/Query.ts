@@ -46,6 +46,9 @@ const Query = {
 			maps: await prisma.map.findMany(),
 		}
 	},
+	getMapTypes: async (_: any, __: any, { prisma }: Context) => {
+		return prisma.mapType.findMany()
+	},
 }
 
 export default Query
