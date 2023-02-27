@@ -31,11 +31,19 @@ const Query = {
 			}
 		}
 
+		if (mapType) {
+			const maps = await prisma.map.findMany({
+				where: { mapTypePrefix: mapType },
+			})
+			return {
+				userErrors: [],
+				maps,
+			}
+		}
+
 		return {
 			userErrors: [],
-			maps: await prisma.map.findMany({
-				where: { mapTypePrefix: mapType },
-			}),
+			maps: await prisma.map.findMany(),
 		}
 	},
 }
