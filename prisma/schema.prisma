@@ -10,12 +10,34 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model MapType {
-    prefix String @id @db.VarChar(16)
+model Map {
+    fileName String @id @db.VarChar(64)
 
-    dateAdded  DateTime @db.Date
-    isOfficial Boolean  @default(true)
-    name       String   @db.VarChar(64)
+    dateReleased   DateTime @db.Date
+    dateUpdated    DateTime @db.Date
+    description    String   @db.Text
+    isOfficial     Boolean
+    isPyroVision   Boolean
+    mapEnvironment String?  @db.VarChar(64)
+    mapName        String   @db.VarChar(255)
+
+    developers Developer[]
+
+    gameModeId String
+    gameMode   GameMode @relation(fields: [gameModeId], references: [id])
+
+    entryCreatedAt DateTime @default(now())
+    entryUpdatedAt DateTime @updatedAt
+}
+
+model GameMode {
+    id String @id @default(uuid())
+
+    dateAdded   DateTime? @db.Date
+    description String    @db.Text
+    isOfficial  Boolean
+    name        String    @unique @db.VarChar(64)
+    prefix      String    @db.VarChar(16)
 
     maps Map[]
 
@@ -23,38 +45,16 @@ model MapType {
     entryJpdatedAt DateTime @updatedAt
 }
 
-model Map {
-    fileName String @id @db.VarChar(64)
+// model Image {
+//     id String @id @default(uuid())
 
-    dateAdded      DateTime @db.Date
-    description    String   @db.Text
-    isOfficial     Boolean  @default(true)
-    isPyroVision   Boolean
-    mapEnvironment String   @db.VarChar(64)
-    mapName        String   @db.VarChar(255)
+//     description String @db.VarChar(255)
+//     url         String @db.VarChar(256)
 
-    developers Developer[]
-
-    mapThumbnailId String @unique
-    mapThumbnail   Image  @relation(fields: [mapThumbnailId], references: [id])
-
-    mapTypePrefix String
-    mapType       MapType @relation(fields: [mapTypePrefix], references: [prefix])
-
-    entryCreatedAt DateTime @default(now())
-    entryUpdatedAt DateTime @updatedAt
-}
-
-model Image {
-    id String @id @default(uuid())
-
-    description String @db.VarChar(255)
-    url         String @db.VarChar(256)
-
-    entryCreatedAt DateTime @default(now())
-    entryUpdatedAt DateTime @updatedAt
-    map            Map?
-}
+//     entryCreatedAt DateTime @default(now())
+//     entryUpdatedAt DateTime @updatedAt
+//     map            Map?
+// }
 
 model Developer {
     id String @id @db.VarChar(64)

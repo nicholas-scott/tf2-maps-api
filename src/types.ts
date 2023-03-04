@@ -10,15 +10,25 @@ export interface Context {
 }
 
 // Inputs for GraphQL resolvers
-export interface MapFilter {
+export interface GetMapsInput {
 	filter: {
 		isOfficial?: boolean
 		isPyroVision?: boolean
-		mapTypePrefix?: string
+		mapPrefix?: string
+		gameMode?: string
 	}
 }
 
 // Payloads for GraphQL resolvers
 export interface Payload {
 	userErrors: { message: string }[]
+}
+
+export interface MapFilter {
+	isOfficial?: boolean
+	isPyroVision?: boolean
+	fileName?: {
+		startsWith: string
+	}
+	gameModeId?: string
 }

@@ -1,7 +1,7 @@
 import Query from "./Query"
 import GameMap from "./GameMap"
-import MapType from "./MapType"
+import GameMode from "./GameMode"
 
-const resolvers = { GameMap, MapType, Query }
+const resolvers = { GameMap, GameMode, Query }
 
 export default resolvers

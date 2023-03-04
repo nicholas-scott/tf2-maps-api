@@ -1,9 +1,10 @@
 import { ApolloServer } from "@apollo/server"
 import { startStandaloneServer } from "@apollo/server/standalone"
-import { PrismaClient, Prisma } from "@prisma/client"
+import { PrismaClient } from "@prisma/client"
 import resolvers from "./resolvers/resolvers"
 import typeDefs from "./schema"
 import { Context } from "./types"
+import { fetchMapData } from "./innitDb/fetchMapData"
 
 const server = new ApolloServer({
 	typeDefs,
@@ -25,6 +26,8 @@ async function startServer() {
 	})
 
 	console.log(`🚀  Server ready at: ${url}`)
+
+	// fetchMapData()
 }
 
 console.log("Starting server...")

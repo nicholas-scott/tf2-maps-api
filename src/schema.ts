@@ -2,26 +2,28 @@ const typeDefs = `
 type Query {
     getMap(fileName: ID!): GameMap
     getMaps(filter: MapFilter!): [GameMap!]!
-    getMapTypes: [MapType!]!
+    getGameModes: [GameMode!]!
 }
 
 type GameMap {
     fileName: ID!
 
-    dateAdded: String!
+    dateReleased: String!
+    dateUpdated: String!
     description: String!
     isOfficial: Boolean!
     isPyroland: Boolean!
     mapName: String!
 
     developers: [MapMaker!]!
-    mapType: MapType!
+    gameMode: GameMode!
 }
 
-type MapType{
-    prefix: ID!
+type GameMode{
+    id: ID!
     
-    dateAdded: String!
+    dateAdded: String
+    description: String!
     isOfficial: Boolean!
     name: String!
 
@@ -44,7 +46,7 @@ type UserError{
 input MapFilter{
     isOfficial: Boolean
     isPyroVision: Boolean
-    mapTypePrefix: String
+    filePrefix: String
 }
 `
 

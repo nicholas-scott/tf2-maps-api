@@ -47,6 +47,20 @@ function getMapTypes($: cheerio.Root, header: cheerio.Cheerio) {
 }
 
 function getMapMakers($: cheerio.Root, header: cheerio.Cheerio) {
+	const mapTypeTable = header.next().next()
+	const mapRows = mapTypeTable.find("tbody > tr")
+	const mapInfo = mapRows
+		.map((i, el) => {
+			const mapInfo = $(el).find("td")
+			const mapMakers = mapInfo
+				.eq(5)
+				.find("a")
+				.map((i, el) => {
+					const mapMaker = $(el).text().trim()
+					return mapMaker
+				})
+		})
+		.get()
 	return []
 }
 

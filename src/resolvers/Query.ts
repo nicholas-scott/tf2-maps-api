@@ -1,5 +1,5 @@
 import { Map } from "@prisma/client"
-import { Context, MapFilter } from "../types"
+import { Context, GetMapsInput, MapFilter } from "../types"
 
 const Query = {
 	getMap: async (
@@ -13,13 +13,33 @@ const Query = {
 	},
 	getMaps: async (
 		_: any,
-		{ filter }: MapFilter,
+		{ filter }: GetMapsInput,
 		{ prisma }: Context
 	): Promise<Map[]> => {
-		return prisma.map.findMany({ where: { ...filter } })
+		let prismaFilter: MapFilter = {}
+
+		if (filter.mapPrefix) {
+			prismaFilter.fileName = { startsWith: filter.mapPrefix }
+			delete filter.mapPrefix
+		}
+
+		if (filter.gameMode) {
+			const gameModeId = await prisma.gameMode.findUnique({
+				where: { name: filter.gameMode },
+				select: { id: true },
+			})
+
+			if (gameModeId) {
+				prismaFilter.gameModeId = gameModeId.id
+			}
+		}
+
+		prismaFilter = { ...prismaFilter, ...filter }
+
+		return prisma.map.findMany({ where: prismaFilter })
 	},
-	getMapTypes: async (_: any, __: any, { prisma }: Context) => {
-		return prisma.mapType.findMany()
+	getGameModes: async (_: any, __: any, { prisma }: Context) => {
+		return prisma.gameMode.findMany()
 	},
 }
 
