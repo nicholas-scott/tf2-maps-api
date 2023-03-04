@@ -42,7 +42,7 @@ model GameMode {
     maps Map[]
 
     entryCreatedAt DateTime @default(now())
-    entryJpdatedAt DateTime @updatedAt
+    entryUpdatedAt DateTime @updatedAt
 }
 
 // model Image {
