@@ -5,6 +5,7 @@ import resolvers from "./resolvers/resolvers"
 import typeDefs from "./schema"
 import { Context } from "./types"
 import { fetchMapData } from "./innitDb/fetchMapData"
+import { getUserFromToken } from "./util/getUserFromToken"
 
 const server = new ApolloServer({
 	typeDefs,
@@ -14,8 +15,11 @@ const server = new ApolloServer({
 const prisma = new PrismaClient()
 
 async function contextFunction({ req, res }: any): Promise<Context> {
+	const userInfo = getUserFromToken(req.headers.authorization)
+
 	return {
 		prisma,
+		userInfo,
 	}
 }
 
@@ -26,8 +30,6 @@ async function startServer() {
 	})
 
 	console.log(`🚀  Server ready at: ${url}`)
-
-	// fetchMapData()
 }
 
 console.log("Starting server...")

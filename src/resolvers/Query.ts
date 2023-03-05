@@ -1,12 +1,17 @@
 import { Map } from "@prisma/client"
 import { Context, GetMapsInput, MapFilter } from "../types"
+import { isValidUser } from "../util/isValidUser"
 
 const Query = {
 	getMap: async (
 		_: any,
 		{ fileName }: { fileName: string },
-		{ prisma }: Context
+		{ prisma, userInfo }: Context
 	): Promise<Map | null> => {
+		//Check if user is logged in
+		if (!userInfo || !(await isValidUser(userInfo.userId, prisma)))
+			return null
+
 		return prisma.map.findUnique({
 			where: { fileName },
 		})
@@ -14,8 +19,12 @@ const Query = {
 	getMaps: async (
 		_: any,
 		{ filter }: GetMapsInput,
-		{ prisma }: Context
+		{ prisma, userInfo }: Context
 	): Promise<Map[]> => {
+		//Check if user is logged in
+		if (!userInfo || !(await isValidUser(userInfo.userId, prisma)))
+			return []
+
 		let prismaFilter: MapFilter = {}
 
 		if (filter.mapPrefix) {
@@ -38,7 +47,10 @@ const Query = {
 
 		return prisma.map.findMany({ where: prismaFilter })
 	},
-	getGameModes: async (_: any, __: any, { prisma }: Context) => {
+	getGameModes: async (_: any, __: any, { prisma, userInfo }: Context) => {
+		//Check if user is logged in
+		if (!userInfo || !(await isValidUser(userInfo.userId, prisma)))
+			return []
 		return prisma.gameMode.findMany()
 	},
 }

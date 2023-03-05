@@ -7,6 +7,7 @@ export interface Context {
 		never,
 		Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
 	>
+	userInfo: { userId: string } | null
 }
 
 // Inputs for GraphQL resolvers
