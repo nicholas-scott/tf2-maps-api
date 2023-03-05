@@ -3,7 +3,47 @@ import validator from "validator"
 import bcrypt from "bcryptjs"
 import JWT from "jsonwebtoken"
 
+function signToken(id: string) {
+	return JWT.sign(
+		{
+			userId: id,
+		},
+		"PLACEMENT_SIGNATURE",
+		{ expiresIn: 3600 }
+	)
+}
+
 const authResolvers = {
+	signIn: async (
+		_: any,
+		{ email, password }: Credentials,
+		{ prisma }: Context
+	): Promise<AuthPayload> => {
+		const isEmail = validator.isEmail(email)
+
+		const user = await prisma.user.findUnique({ where: { email: email } })
+
+		if (!user) {
+			return {
+				userErrors: [{ message: "Invalid Credentials" }],
+				token: null,
+			}
+		}
+
+		const isMatched = await bcrypt.compare(password, user.password)
+
+		if (!isMatched) {
+			return {
+				userErrors: [{ message: "Invalid Credentials" }],
+				token: null,
+			}
+		}
+
+		return {
+			userErrors: [],
+			token: signToken(user.id),
+		}
+	},
 	signUp: async (
 		_: any,
 		{ email, password }: Credentials,
@@ -30,15 +70,7 @@ const authResolvers = {
 			data: { email, password: hashedPass },
 		})
 
-		const token = await JWT.sign(
-			{
-				userId: user.id,
-			},
-			"PLACEMENT_SIGNATURE",
-			{ expiresIn: 3600 }
-		)
-
-		return { userErrors: [], token: token }
+		return { userErrors: [], token: signToken(user.id) }
 	},
 }
 
