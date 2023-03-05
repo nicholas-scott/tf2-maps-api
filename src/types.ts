@@ -19,9 +19,18 @@ export interface GetMapsInput {
 	}
 }
 
+export interface Credentials {
+	email: string
+	password: string
+}
+
 // Payloads for GraphQL resolvers
 export interface Payload {
 	userErrors: { message: string }[]
+}
+
+export interface AuthPayload extends Payload {
+	token: string | null
 }
 
 export interface MapFilter {
@@ -32,3 +41,5 @@ export interface MapFilter {
 	}
 	gameModeId?: string
 }
+
+//

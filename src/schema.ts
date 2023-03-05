@@ -5,6 +5,11 @@ type Query {
     getGameModes: [GameMode!]!
 }
 
+type Mutation {
+    login(input: CredentialsInput!): AuthPayload!
+    registerUser(input: CredentialsInput!): AuthPayload!
+}
+
 type GameMap {
     fileName: ID!
 
@@ -43,10 +48,20 @@ type UserError{
     message: String!
 }
 
+type AuthPayload{
+    userErrors: [UserError!]!
+    token: String
+}
+
 input MapFilter{
     isOfficial: Boolean
     isPyroVision: Boolean
     filePrefix: String
+}
+
+input CredentialsInput{
+    email: String!
+    password: String!
 }
 `
 
