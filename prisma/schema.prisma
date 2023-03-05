@@ -60,9 +60,19 @@ model Developer {
     id String @id @db.VarChar(64)
 
     name String @db.VarChar(64)
-    link String @db.VarChar(256)
+    link String @unique @db.VarChar(256)
 
     maps Map[]
+
+    entryCreatedAt DateTime @default(now())
+    entryUpdatedAt DateTime @updatedAt
+}
+
+model User {
+    id String @id @default(uuid())
+
+    email    String @unique
+    password String
 
     entryCreatedAt DateTime @default(now())
     entryUpdatedAt DateTime @updatedAt
