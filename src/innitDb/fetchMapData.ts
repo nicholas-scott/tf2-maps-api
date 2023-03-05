@@ -18,11 +18,11 @@ export async function fetchMapData() {
 	const mapsHeader = headers.eq(1).parent()
 
 	//Get the mapTypes and maps, and map developers
-	const mapTypes = getMapTypes($, mapTypesHeader)
+	const gameModes = getMapTypes($, mapTypesHeader)
 	const maps = getMaps($, mapsHeader)
 	const mapMakers = getMapMakers($, mapsHeader)
-	console.log(maps)
-	return { mapTypes, maps, mapMakers }
+	console.log(mapMakers)
+	return { gameModes, maps, mapMakers }
 }
 
 function getMapTypes($: cheerio.Root, header: cheerio.Cheerio) {
@@ -49,19 +49,22 @@ function getMapTypes($: cheerio.Root, header: cheerio.Cheerio) {
 function getMapMakers($: cheerio.Root, header: cheerio.Cheerio) {
 	const mapTypeTable = header.next().next()
 	const mapRows = mapTypeTable.find("tbody > tr")
-	const mapInfo = mapRows
+	const mapMakerInfo = mapRows
 		.map((i, el) => {
 			const mapInfo = $(el).find("td")
-			const mapMakers = mapInfo
+			const mapMaker = mapInfo
 				.eq(5)
 				.find("a")
 				.map((i, el) => {
 					const mapMaker = $(el).text().trim()
-					return mapMaker
+					const mapMakerUrl = $(el).attr("href")
+					return { link: mapMakerUrl, name: mapMaker }
 				})
+				.get()
+			return mapMaker
 		})
 		.get()
-	return []
+	return mapMakerInfo
 }
 
 function getMaps($: cheerio.Root, header: cheerio.Cheerio) {
