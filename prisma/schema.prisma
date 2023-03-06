@@ -57,7 +57,7 @@ model GameMode {
 // }
 
 model Developer {
-    id String @id @db.VarChar(64)
+    id String @id @default(uuid()) @db.VarChar(64)
 
     name String @db.VarChar(64)
     link String @unique @db.VarChar(256)
