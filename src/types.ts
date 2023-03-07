@@ -43,4 +43,8 @@ export interface MapFilter {
 	gameModeId?: string
 }
 
-//
+// Data Types for fetchData
+export interface MapMaker {
+	name: string
+	link: string
+}
