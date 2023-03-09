@@ -24,12 +24,14 @@ async function contextFunction({ req, res }: any): Promise<Context> {
 }
 
 async function startServer() {
-	const { url } = await startStandaloneServer(server, {
-		context: contextFunction,
-		listen: { port: 4000 },
-	})
+	// const { url } = await startStandaloneServer(server, {
+	// 	context: contextFunction,
+	// 	listen: { port: 4000 },
+	// })
 
-	console.log(`🚀  Server ready at: ${url}`)
+	// console.log(`🚀  Server ready at: ${url}`)
+
+	fetchMapData()
 }
 
 console.log("Starting server...")

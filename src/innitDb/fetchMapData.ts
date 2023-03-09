@@ -10,48 +10,50 @@ export async function fetchMapData() {
 	const text = await resp.text()
 	const $ = load(text)
 
-	//Select all h2 > span elements. These h2s are next to the grids for map types and maps
-	const headers = $("h2 > span").filter((i, el) => {
-		return $(el).text() === "Map types" || $(el).text() === "Maps"
-	})
+	const mapMakers = fetchMapMakers($)
+	const maps = fetchMaps($)
+	const gameModes = fetchGameModes($)
 
-	//Get the first header from headers and print the text
-	const gameModesHeader = headers.eq(0).parent()
-	const mapsHeader = headers.eq(1).parent()
-
-	//Get the gameModes and maps, and map developers
-	const gameModes = getGameModes($, gameModesHeader)
-	const maps = getMaps($, mapsHeader)
-	const mapMakers = getMapMakers($, mapsHeader)
-	console.log(mapMakers)
-	return { gameModes, maps, mapMakers }
+	return { mapMakers, maps, gameModes }
 }
 
-function getGameModes($: cheerio.Root, header: cheerio.Cheerio) {
-	const gameModeTable = header.next().next()
-	const mapRows = gameModeTable.find("tbody > tr")
-	const mapInfo = mapRows
+function fetchGameModes($: cheerio.Root) {
+	const mapTitleHeader = $("h2 > span")
+		.filter((i, el) => {
+			return $(el).text() === "Map types"
+		})
+		.parent()
+
+	const gameModeTable = mapTitleHeader.next().next()
+	const gameModeRows = gameModeTable.find("tbody > tr")
+	const gameModeInfo = gameModeRows
 		.map((i, el) => {
-			const gameModeInfo = $(el).find("td")
-			const gameModeName = gameModeInfo.eq(0).text().trim()
-			const gameModePrefix = gameModeInfo.eq(1).text().trim()
+			const gameModeTdRow = $(el).find("td")
+			const gameModeName = gameModeTdRow.eq(0).text().trim()
+			const gameModePrefix = gameModeTdRow.eq(1).text().trim()
 			const gameModeDate = dashedDateReg.exec(
 				// This can be done just by trimming string
-				gameModeInfo.eq(2).text()
+				gameModeTdRow.eq(2).text()
 			)?.[0]
 			return { gameModeName, gameModePrefix, gameModeDate }
 		})
 		.get()
 
 	//First tr is empty
-	mapInfo.shift()
-	return mapInfo
+	gameModeInfo.shift()
+	return gameModeInfo
 }
 
-function getMapMakers($: cheerio.Root, header: cheerio.Cheerio): MapMaker[] {
-	const gameModeTable = header.next().next()
-	const mapRows = gameModeTable.find("tbody > tr")
-	const mapMakerInfo = mapRows
+export function fetchMapMakers($: cheerio.Root) {
+	const mapTitleHeader = $("h2 > span")
+		.filter((i, el) => {
+			return $(el).text() === "Maps"
+		})
+		.parent()
+
+	const gameModeTable = mapTitleHeader.next().next()
+	const mapInfoRows = gameModeTable.find("tbody > tr")
+	const mapMakerInfo = mapInfoRows
 		.map((i, el) => {
 			const mapInfo = $(el).find("td")
 			const mapMaker = mapInfo
@@ -69,10 +71,16 @@ function getMapMakers($: cheerio.Root, header: cheerio.Cheerio): MapMaker[] {
 	return mapMakerInfo
 }
 
-function getMaps($: cheerio.Root, header: cheerio.Cheerio) {
-	const gameModeTable = header.next().next()
-	const mapRows = gameModeTable.find("tbody > tr")
-	const mapInfo = mapRows
+export function fetchMaps($: cheerio.Root) {
+	const mapTitleHeader = $("h2 > span")
+		.filter((i, el) => {
+			return $(el).text() === "Maps"
+		})
+		.parent()
+
+	const gameModeTable = mapTitleHeader.next().next()
+	const mapInfoRows = gameModeTable.find("tbody > tr")
+	const mapInfo = mapInfoRows
 		.map((i, el) => {
 			const mapInfo = $(el).find("td")
 			const mapName = mapInfo.eq(1).text().trim()
